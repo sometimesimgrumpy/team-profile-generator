@@ -6,6 +6,8 @@ const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
 
+team = [];
+
 // Manager questions
 function teamBuilder() {
   inquirer
@@ -66,18 +68,143 @@ function teamBuilder() {
       },
     ])
     // Handle the team data
-    .then();
+    .then((teamBuilder) => {
+      let newManager = new Manager(teamName, name, id, email, managerNumber);
+
+      team.push(newManager);
+      console.log(
+        `You added a new Manager, ${this.newManager}, to the ${this.teamName} team!`
+      );
+    });
 }
 
 // Add Employee
-function addEmployee() {}
+function addEmployee() {
+  inquirer
+    .prompt([
+      {
+        type: "list",
+        message: "What is the position of this employee?",
+        choices: ["Engineer", "Intern"],
+        name: "empPosition",
+      },
+      {
+        type: "input",
+        message: "What is the employee's name?",
+        name: "empName",
+        default: () => {},
+        validate: function (empName) {
+          if (empName != null) {
+            return true;
+          } else {
+            console.log("Please enter a name for this employee");
+            return false;
+          }
+        },
+      },
+      {
+        type: "input",
+        message: "What is the employee's ID number?",
+        name: "empID",
+        default: () => {},
+        validate: function (empID) {
+          if (empID === null && Number.isNaN(empID)) {
+            console.log(" is not a valid ID. Please enter a valid ID number.");
+            return false;
+          } else {
+            return true;
+          }
+        },
+      },
+      {
+        type: "input",
+        message: "What is the employee's email?",
+        name: "empEmail",
+        default: () => {},
+        // https://gist.github.com/Amitabh-K/ae073eea3d5207efaddffde19b1618e8 - from previous homework
+        validate: function (empEmail) {
+          valid = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(
+            empEmail
+          );
+          if (valid) {
+            return true;
+          } else {
+            console.log(" is not a valid email. Please enter a valid email.");
+            return false;
+          }
+        },
+      },
+      {
+        // question called if employee is Engineer - https://stackoverflow.com/questions/56412516/conditional-prompt-rendering-in-inquirer
+        when: (answers) => answers.empPosition === "Engineer",
+        type: "input",
+        message: "What is the employee's github username?",
+        name: "empGithub",
+        default: () => {},
+        validate: function (empGithub) {
+          if (empGithub != null) {
+            return true;
+          } else {
+            console.log("Please enter a github username for this employee");
+            return false;
+          }
+        },
+      },
+      {
+        // question called if employee is Intern
+        when: (answers) => answers.empPosition === "Intern",
+        type: "input",
+        message: "Where does the employee go to schoool?",
+        name: "empSchool",
+        default: () => {},
+        validate: function (empSchool) {
+          if (empSchool != null) {
+            return true;
+          } else {
+            console.log("Please enter a school for this employee");
+            return false;
+          }
+        },
+      },
+      // how to ask for more team members? https://stackoverflow.com/questions/68170024/keep-repeating-the-prompter-questions-with-inquirer-js-based-on-answer
+      {
+        type: "confirm",
+        message: "Would you like to add more employees to this team?",
+        name: "addMoreEmployees",
+      },
+    ])
+    // handle employee data
+    .then((addEmployee) => {
+      let newEmployee = new Employee(
+        empPosition,
+        empName,
+        empID,
+        empEmail,
+        empGithub,
+        empSchool,
+        addMoreEmployees
+      );
 
-// Choosing an Engineer
-function assignEngineer() {}
+      team.push(newEmployee);
+      console.log(`You added ${this.empName} to the team!`);
 
-// Choosing an Intern
-function assignIntern() {}
+      // conditional logic if they wanted to add more employees
+      if (addMoreEmployees) {
+        return addEmployee(team);
+      } else {
+        return team;
+      }
+    });
+}
 
 // generate HTML
 
 function generateHTML() {}
+
+// call functions to run the app
+
+addManager()
+  .then(addEmployee)
+  .then((team) => {
+    return generateHTML(team);
+  });
