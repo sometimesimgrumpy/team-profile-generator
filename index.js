@@ -6,205 +6,251 @@ const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
 
-team = [];
+const team = [];
 
 // Manager questions
 function teamBuilder() {
-  inquirer
-    .prompt([
-      {
-        type: "input",
-        message: "What is the name of this team?",
-        name: "teamName",
-      },
-      {
-        type: "input",
-        message: "What is the name of this team's manager?",
-        name: "teamManager",
-      },
-      {
-        type: "input",
-        message: "What is the manager's email?",
-        name: "managerEmail",
-        default: () => {},
-        // https://gist.github.com/Amitabh-K/ae073eea3d5207efaddffde19b1618e8 - from previous homework
-        validate: function (managerEmail) {
-          valid = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(
-            managerEmail
-          );
-          if (valid) {
-            return true;
-          } else {
-            console.log(" is not a valid email. Please enter a valid email.");
-            return false;
-          }
+  return (
+    inquirer
+      .prompt([
+        {
+          type: "input",
+          message: "What is the name of this team?",
+          name: "teamName",
+          default: () => {},
+          validate: function (teamNameInput) {
+            if (!teamNameInput) {
+              console.log("Ooops, please enter a team name.");
+              return false;
+            } else {
+              return true;
+            }
+          },
         },
-      },
-      {
-        type: "input",
-        message: "What is the manager ID?",
-        name: "managerID",
-      },
-      {
-        type: "input",
-        message: "what is the office number for this manager?",
-        name: "managerNumber",
-        default: () => {},
-        // https://stackoverflow.com/questions/4338267/validate-phone-number-with-javascript
-        validate: function (managerNumber) {
-          valid =
-            /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im.test(
-              managerNumber
-            );
-          if (valid) {
-            return true;
-          } else {
-            console.log(
-              " is not a valid phone number. Please enter a 9-digit phone number."
-            );
-            return false;
-          }
+        {
+          type: "input",
+          message: "What is the name of this team's manager?",
+          name: "name",
+          default: () => {},
+          validate: function (nameInput) {
+            if (!nameInput) {
+              console.log("Ooops, please enter a name.");
+              return false;
+            } else {
+              return true;
+            }
+          },
         },
-      },
-    ])
-    // Handle the team data
-    .then((teamBuilder) => {
-      let newManager = new Manager(teamName, name, id, email, managerNumber);
+        {
+          type: "input",
+          message: "What is the manager's email?",
+          name: "email",
+          default: () => {},
+          // https://gist.github.com/Amitabh-K/ae073eea3d5207efaddffde19b1618e8 - from previous homework
+          validate: function (emailInput) {
+            valid = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(
+              emailInput
+            );
+            if (valid) {
+              return true;
+            } else {
+              console.log(" is not a valid email. Please enter a valid email.");
+              return false;
+            }
+          },
+        },
+        {
+          type: "input",
+          message: "What is the manager ID?",
+          name: "id",
+          default: () => {},
+          validate: function (idInput) {
+            if (idInput === null && Number.isNaN(idInput)) {
+              console.log(
+                " is not a valid ID. Please enter a valid ID number."
+              );
+              return false;
+            } else {
+              return true;
+            }
+          },
+        },
+        {
+          type: "input",
+          message: "what is the office number for this manager?",
+          name: "officeNumber",
+          //default: () => {},
+          validate: function (officeNumInput) {
+            if (officeNumInput === null && Number.isNaN(officeNumInput)) {
+              console.log(
+                " is not a valid ID. Please enter a valid ID number."
+              );
+              return false;
+            } else {
+              return true;
+            }
+          },
+        },
+      ])
+      // Handle the team data
+      .then((teamData) => {
+        const { teamName, name, email, id, officeNumber } = teamData;
+        const newManager = new Manager(teamName, name, id, email, officeNumber);
 
-      team.push(newManager);
-      console.log(
-        `You added a new Manager, ${this.newManager}, to the ${this.teamName} team!`
-      );
-    });
+        team.push(newManager);
+        console.log(
+          `You added a new Manager, ${name}, to the ${teamName} team!`
+        );
+        addEmployee();
+      })
+  );
 }
 
 // Add Employee
 function addEmployee() {
-  inquirer
-    .prompt([
-      {
-        type: "list",
-        message: "What is the position of this employee?",
-        choices: ["Engineer", "Intern"],
-        name: "empPosition",
-      },
-      {
-        type: "input",
-        message: "What is the employee's name?",
-        name: "empName",
-        default: () => {},
-        validate: function (empName) {
-          if (empName != null) {
-            return true;
-          } else {
-            console.log("Please enter a name for this employee");
-            return false;
-          }
+  return (
+    inquirer
+      .prompt([
+        {
+          type: "list",
+          message: "What is the position of this employee?",
+          choices: ["Engineer", "Intern"],
+          name: "position",
         },
-      },
-      {
-        type: "input",
-        message: "What is the employee's ID number?",
-        name: "empID",
-        default: () => {},
-        validate: function (empID) {
-          if (empID === null && Number.isNaN(empID)) {
-            console.log(" is not a valid ID. Please enter a valid ID number.");
-            return false;
-          } else {
-            return true;
-          }
+        {
+          type: "input",
+          message: "What is the employee's name?",
+          name: "name",
+          //default: () => {},
+          validate: function (nameInput) {
+            if (!nameInput) {
+              console.log("Please enter a name for this employee");
+              return false;
+            } else {
+              return true;
+            }
+          },
         },
-      },
-      {
-        type: "input",
-        message: "What is the employee's email?",
-        name: "empEmail",
-        default: () => {},
-        // https://gist.github.com/Amitabh-K/ae073eea3d5207efaddffde19b1618e8 - from previous homework
-        validate: function (empEmail) {
-          valid = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(
-            empEmail
+        {
+          type: "input",
+          message: "What is the employee's ID number?",
+          name: "id",
+          //default: () => {},
+          validate: function (idInput) {
+            if (idInput === null && Number.isNaN(idInput)) {
+              console.log(
+                " is not a valid ID. Please enter a valid ID number."
+              );
+              return false;
+            } else {
+              return true;
+            }
+          },
+        },
+        {
+          type: "input",
+          message: "What is the employee's email?",
+          name: "email",
+          //default: () => {},
+          // https://gist.github.com/Amitabh-K/ae073eea3d5207efaddffde19b1618e8 - from previous homework
+          validate: function (emailInput) {
+            valid = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(
+              emailInput
+            );
+            if (valid) {
+              return true;
+            } else {
+              console.log(" is not a valid email. Please enter a valid email.");
+              return false;
+            }
+          },
+        },
+        {
+          // question called if employee is Engineer - https://stackoverflow.com/questions/56412516/conditional-prompt-rendering-in-inquirer
+          when: (answers) => answers.position === "Engineer",
+          type: "input",
+          message: "What is the employee's github username?",
+          name: "github",
+          //default: () => {},
+          validate: function (empGithub) {
+            if (!empGithub) {
+              console.log("Please enter a github username for this employee");
+              return false;
+            } else {
+              return true;
+            }
+          },
+        },
+        {
+          // question called if employee is Intern
+          when: (answers) => answers.position === "Intern",
+          type: "input",
+          message: "Where does this employee go to school?",
+          name: "school",
+          //default: () => {},
+          validate: function (school) {
+            if (!school) {
+              console.log("Please enter a school for this employee");
+              return false;
+            } else {
+              return true;
+            }
+          },
+        },
+        // how to ask for more team members? https://stackoverflow.com/questions/68170024/keep-repeating-the-prompter-questions-with-inquirer-js-based-on-answer
+        {
+          type: "confirm",
+          message: "Would you like to add more employees to this team?",
+          name: "addMoreEmployees",
+        },
+      ])
+      // handle employee data
+      .then((response) => {
+        if (response.position === "Engineer") {
+          let newEmployee = new Engineer(
+            response.name,
+            response.id,
+            response.email,
+            response.github
           );
-          if (valid) {
-            return true;
-          } else {
-            console.log(" is not a valid email. Please enter a valid email.");
-            return false;
-          }
-        },
-      },
-      {
-        // question called if employee is Engineer - https://stackoverflow.com/questions/56412516/conditional-prompt-rendering-in-inquirer
-        when: (answers) => answers.empPosition === "Engineer",
-        type: "input",
-        message: "What is the employee's github username?",
-        name: "empGithub",
-        default: () => {},
-        validate: function (empGithub) {
-          if (empGithub != null) {
-            return true;
-          } else {
-            console.log("Please enter a github username for this employee");
-            return false;
-          }
-        },
-      },
-      {
-        // question called if employee is Intern
-        when: (answers) => answers.empPosition === "Intern",
-        type: "input",
-        message: "Where does the employee go to schoool?",
-        name: "empSchool",
-        default: () => {},
-        validate: function (empSchool) {
-          if (empSchool != null) {
-            return true;
-          } else {
-            console.log("Please enter a school for this employee");
-            return false;
-          }
-        },
-      },
-      // how to ask for more team members? https://stackoverflow.com/questions/68170024/keep-repeating-the-prompter-questions-with-inquirer-js-based-on-answer
-      {
-        type: "confirm",
-        message: "Would you like to add more employees to this team?",
-        name: "addMoreEmployees",
-      },
-    ])
-    // handle employee data
-    .then((addEmployee) => {
-      let newEmployee = new Employee(
-        empPosition,
-        empName,
-        empID,
-        empEmail,
-        empGithub,
-        empSchool,
-        addMoreEmployees
-      );
+          team.push(newEmployee);
+          console.log(`You added Engineer ${response.name} to the team!`);
+        }
 
-      team.push(newEmployee);
-      console.log(`You added ${this.empName} to the team!`);
+        if (response.position === "Intern") {
+          let newEmployee = new Intern(
+            response.name,
+            response.id,
+            response.email,
+            response.school
+          );
+          team.push(newEmployee);
+          console.log(`You added Intern ${response.name} to the team!`);
+        }
 
-      // conditional logic if they wanted to add more employees
-      if (addMoreEmployees) {
-        return addEmployee(team);
-      } else {
-        return team;
-      }
-    });
+        // conditional logic if they wanted to add more employees
+        if (response.addMoreEmployees) {
+          addEmployee();
+        } else {
+          generateHTML(team);
+          console.log(team);
+          //return team;
+        }
+      })
+  );
 }
 
 // generate HTML
 
-function generateHTML() {}
+function writeHTML(data) {
+  fs.write("./dist/index.html", data);
+  console.log("Your team profile is ready!");
+}
 
 // call functions to run the app
 
-addManager()
-  .then(addEmployee)
-  .then((team) => {
-    return generateHTML(team);
-  });
+teamBuilder();
+function writeHTML(team) {
+  console.log("Generating HTML...");
+}
+//.then(console.log(team));
