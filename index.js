@@ -6,6 +6,8 @@ const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
 
+const generateTeamCards = require("./src/generateHTML");
+
 const team = [];
 
 // Manager questions
@@ -95,7 +97,7 @@ function teamBuilder() {
       // Handle the team data
       .then((teamData) => {
         const { teamName, name, email, id, officeNumber } = teamData;
-        const newManager = new Manager(teamName, name, id, email, officeNumber);
+        const newManager = new Manager(name, id, email, teamName, officeNumber);
 
         team.push(newManager);
         console.log(
@@ -232,7 +234,7 @@ function addEmployee() {
         if (response.addMoreEmployees) {
           addEmployee();
         } else {
-          generateHTML(team);
+          writeHTML(team);
           console.log(team);
           //return team;
         }
@@ -242,15 +244,12 @@ function addEmployee() {
 
 // generate HTML
 
-function writeHTML(data) {
-  fs.write("./dist/index.html", data);
-  console.log("Your team profile is ready!");
+function writeHTML(team) {
+  fs.writeFile("./dist/index.html", generateTeamCards(team), (err) =>
+    err ? console.log(err) : console.log("Your team profile is ready!")
+  );
 }
 
 // call functions to run the app
 
 teamBuilder();
-function writeHTML(team) {
-  console.log("Generating HTML...");
-}
-//.then(console.log(team));
