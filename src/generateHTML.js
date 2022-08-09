@@ -2,7 +2,7 @@
 function createManager(manager) {
   return `
     <div class="card text-center m-3 shadow-sm">
-    <div class="card-header bg-primary text-light fw-bold" style="font-weight: bold; font-size: 1.5rem">${manager.teamName}Team Manager</div>
+    <div class="card-header bg-primary text-light fw-bold" style="font-weight: bold; font-size: 1.5rem">${manager.teamName} Team Manager</div>
         <div class="card-body">
             <h5 class="card-title">${manager.name}</h5>
             <img src="./assets/employee-icon.jpg" style="width: 50%"/>
@@ -98,7 +98,7 @@ function generateHTML(employees) {
 
   <nav class="navbar navbar-light bg-dark shadow">
     <span class="navbar-text text-light pl-5" style="font-size: 2rem;">
-      Team Profile 
+      ${employees.teamName} Team Profile 
     </sp>
   </nav>
   
