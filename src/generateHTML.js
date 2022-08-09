@@ -1,7 +1,7 @@
 // card for Manager
 function createManager(manager) {
   return `
-    <div class="card text-center m-3 shadow-sm">
+    <div class="card text-center my-3 mx-auto shadow-sm">
     <div class="card-header bg-primary text-light fw-bold" style="font-weight: bold; font-size: 1.5rem">${manager.teamName} Team Manager</div>
         <div class="card-body">
             <h5 class="card-title">${manager.name}</h5>
@@ -21,7 +21,7 @@ function createManager(manager) {
 // card for Engineer
 function createEngineer(engineer) {
   return `
-    <div class="card text-center m-3 shadow-sm">
+    <div class="card text-center my-3 mx-auto shadow-sm">
     <div class="card-header bg-success text-light fw-bold" style="font-weight: bold; font-size: 1.5rem">Engineer</div>
         <div class="card-body">
             <h5 class="card-title">${engineer.name}</h5>
@@ -38,7 +38,7 @@ function createEngineer(engineer) {
 // card for Intern
 function createIntern(intern) {
   return `
-    <div class="card text-center m-3 shadow-sm">
+    <div class="card text-center my-3 mx-auto shadow-sm">
         <div class="card-header bg-warning text-light fw-bold" style="font-weight: bold; font-size: 1.5rem">Intern</div>
             <div class="card-body">
                 <h5 class="card-title">${intern.name}</h5>
@@ -98,7 +98,7 @@ function generateHTML(employees) {
 
   <nav class="navbar navbar-light bg-dark shadow">
     <span class="navbar-text text-light pl-5" style="font-size: 2rem;">
-      ${employees.teamName} Team Profile 
+      Team Profile 
     </sp>
   </nav>
   
