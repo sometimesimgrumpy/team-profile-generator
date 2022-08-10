@@ -17,7 +17,8 @@ function teamBuilder() {
       .prompt([
         {
           type: "input",
-          message: "What is the name of this team?",
+          message:
+            "Welcome to your Team Profile Generator \nWhat is the name of this team?",
           name: "teamName",
           default: () => {},
           validate: function (teamNameInput) {
@@ -99,7 +100,6 @@ function teamBuilder() {
       .then((teamData) => {
         const { teamName, name, email, id, officeNumber } = teamData;
         const newManager = new Manager(name, id, email, teamName, officeNumber);
-        console.log(newManager);
 
         team.push(newManager);
         console.log(
@@ -117,7 +117,8 @@ function addEmployee() {
       .prompt([
         {
           type: "list",
-          message: "What is the position of this employee?",
+          message:
+            "Please enter a new team member \nWhat is the position of this employee?",
           choices: ["Engineer", "Intern"],
           name: "position",
         },
@@ -128,7 +129,7 @@ function addEmployee() {
           //default: () => {},
           validate: function (nameInput) {
             if (!nameInput) {
-              console.log("Please enter a name for this employee");
+              console.log("Ooops, please enter a name for this employee");
               return false;
             } else {
               return true;
@@ -237,8 +238,6 @@ function addEmployee() {
           addEmployee();
         } else {
           writeHTML(team);
-          console.log(team);
-          //return team;
         }
       })
   );
