@@ -98,6 +98,7 @@ function teamBuilder() {
       .then((teamData) => {
         const { teamName, name, email, id, officeNumber } = teamData;
         const newManager = new Manager(name, id, email, teamName, officeNumber);
+        console.log(newManager);
 
         team.push(newManager);
         console.log(
