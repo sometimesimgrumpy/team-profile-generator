@@ -26,6 +26,8 @@ Video: https://drive.google.com/file/d/1gY6xsPSMq8Af7ab6wAx0ebDPJsv1vxaf/view
 
 Tests are being run on the constructor functions Employee, Engineer, Intern, and Manager. To run the tests type in the command `run npm test`
 
+Test Video: https://drive.google.com/file/d/1sxaFyvbbdkhh_zLXVd9ApjjJyLhUuOTl/view
+
 ## License
 
 This project is not licensed.
