@@ -27,7 +27,7 @@ function teamBuilder() {
             } else {
               return true;
             }
-          }
+          },
         },
         {
           type: "input",
@@ -41,7 +41,7 @@ function teamBuilder() {
             } else {
               return true;
             }
-          }
+          },
         },
         {
           type: "input",
@@ -59,7 +59,7 @@ function teamBuilder() {
               console.log(" is not a valid email. Please enter a valid email.");
               return false;
             }
-          }
+          },
         },
         {
           type: "input",
@@ -75,7 +75,7 @@ function teamBuilder() {
             } else {
               return true;
             }
-          }
+          },
         },
         {
           type: "input",
@@ -83,6 +83,7 @@ function teamBuilder() {
           name: "officeNumber",
           //default: () => {},
           validate: function (officeNumInput) {
+            // can't be empty, can't be a non-number
             if (!officeNumInput && isNaN(officeNumInput)) {
               console.log(
                 " is not a valid ID. Please enter a valid ID number."
@@ -91,8 +92,8 @@ function teamBuilder() {
             } else {
               return true;
             }
-          }
-        }
+          },
+        },
       ])
       // Handle the team data
       .then((teamData) => {
@@ -118,7 +119,7 @@ function addEmployee() {
           type: "list",
           message: "What is the position of this employee?",
           choices: ["Engineer", "Intern"],
-          name: "position"
+          name: "position",
         },
         {
           type: "input",
@@ -132,7 +133,7 @@ function addEmployee() {
             } else {
               return true;
             }
-          }
+          },
         },
         {
           type: "input",
@@ -148,7 +149,7 @@ function addEmployee() {
             } else {
               return true;
             }
-          }
+          },
         },
         {
           type: "input",
@@ -166,7 +167,7 @@ function addEmployee() {
               console.log(" is not a valid email. Please enter a valid email.");
               return false;
             }
-          }
+          },
         },
         {
           // question called if employee is Engineer - https://stackoverflow.com/questions/56412516/conditional-prompt-rendering-in-inquirer
@@ -182,7 +183,7 @@ function addEmployee() {
             } else {
               return true;
             }
-          }
+          },
         },
         {
           // question called if employee is Intern
@@ -198,14 +199,14 @@ function addEmployee() {
             } else {
               return true;
             }
-          }
+          },
         },
         // how to ask for more team members? https://stackoverflow.com/questions/68170024/keep-repeating-the-prompter-questions-with-inquirer-js-based-on-answer
         {
           type: "confirm",
           message: "Would you like to add more employees to this team?",
-          name: "addMoreEmployees"
-        }
+          name: "addMoreEmployees",
+        },
       ])
       // handle employee data
       .then((response) => {
