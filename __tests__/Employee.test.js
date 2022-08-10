@@ -2,43 +2,40 @@
 
 // test framework
 // test('what should test check for', () => {
-//    expect(function(test).tobe(testExpectation))
+//    expect(function(test)).tobe(testExpectation)
 //})
 
 const Employee = require("../lib/Employee");
 
-test("Receive employee strings", () => {
+test("Receive employee input strings from user", () => {
   const testEmployee = new Employee("Brianna", "12345", "brianna@mail.com");
 
-  expect(testEmployee.name).toBe("Brianna");
-  expect(testEmployee.id).toBe("12345");
-  expect(testEmployee.email).toBe("brianna@mail.com");
+  // https://jestjs.io/docs/expect
+  expect(testEmployee.name).toEqual("Brianna");
+  expect(testEmployee.id).toEqual("12345");
+  expect(testEmployee.email).toEqual("brianna@mail.com");
 });
 
-test("Gets name from Employee contructor", () => {
+test("Gets name from Employee class", () => {
   const testEmployee = new Employee("James", "45322", "james@mail.com");
-  //const getName = getName(testEmployee);
 
-  expect(getName(testEmployee)).toBeEqual("James");
+  expect(testEmployee.getName()).toEqual("James");
 });
 
-test("Gets id from Employee contructor", () => {
+test("Gets id from Employee class", () => {
   const testEmployee = new Employee("James", "45322", "james@mail.com");
-  const getId = getId(testEmployee);
 
-  expect(getId).toBe("43522");
+  expect(testEmployee.getID()).toBe("45322");
 });
 
-test("Gets email from Employee contructor", () => {
+test("Gets email from Employee class", () => {
   const testEmployee = new Employee("James", "45322", "james@mail.com");
-  const getEmail = getEmail(testEmployee);
 
-  expect(getEmail).toBe("james@mail.com");
+  expect(testEmployee.getEmail()).toBe("james@mail.com");
 });
 
 test("Gets role from Employee contructor", () => {
   const testEmployee = new Employee("James", "45322", "james@mail.com");
-  const getRole = getRole(testEmployee);
 
-  expect(getRole).toBe("Employee");
+  expect(testEmployee.getRole()).toBe("Employee");
 });
